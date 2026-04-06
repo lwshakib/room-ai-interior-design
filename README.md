@@ -1,87 +1,51 @@
-# Welcome to React Router!
+# Room AI Interior Design
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Room AI Interior Design is an AI-powered architectural visualization application that transforms 2D floor plans into photorealistic 3D renders. Built with React Router 7, Tailwind CSS 4, and the Puter.js SDK.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## ⚙️ Tech Stack
 
-## Features
+- **React Router 7**: Modern full-stack React framework.
+- **Tailwind CSS 4**: Utility-first CSS framework for rapid UI development.
+- **Puter.js**: Infrastructure for authentication, permanent file storage, and AI model hosting.
+- **Lucide React**: Beautiful icons for the interface.
+- **React Compare Slider**: Side-by-side visualization of architectural transformations.
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## 🔋 Features
 
-## Getting Started
+- **2D-to-3D Visualization**: Instant rendering of flat floor plans into 3D models.
+- **Persistent Media Hosting**: Publicly accessible URLs for all generated renders.
+- **Project Gallery**: Personal workspace to track visualization history.
+- **Side-by-Side Comparison**: Interactive tool to compare source sketches with AI renders.
+
+## 🤸 Quick Start
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/en)
+- [Bun](https://bun.sh/) (Recommended)
 
 ### Installation
 
-Install the dependencies:
-
 ```bash
-npm install
+bun install
+```
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+VITE_PUTER_WORKER_URL="your_puter_worker_url"
 ```
 
 ### Development
 
-Start the development server with HMR:
-
 ```bash
-npm run dev
+bun run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
-Built with ❤️ using React Router.
+Built with ❤️ for architects and designers.
