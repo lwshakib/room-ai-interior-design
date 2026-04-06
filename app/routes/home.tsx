@@ -1,11 +1,11 @@
 import type { Route } from './+types/home';
 import Navbar from '../../components/Navbar';
-import { ArrowRight, ArrowUpRight, Clock, Layers } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Clock, Layers, Trash2 } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import Upload from '../../components/Upload';
 import { useNavigate } from 'react-router';
 import { useEffect, useRef, useState } from 'react';
-import { createProject, getProjects } from '../../lib/puter.action';
+import { createProject, deleteProject, getProjects } from '../../lib/puter.action';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -20,6 +20,7 @@ export function meta({}: Route.MetaArgs) {
 export default function Home() {
   const navigate = useNavigate();
   const [projects, setProjects] = useState<DesignItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const isCreatingProjectRef = useRef(false);
 
   const handleUploadComplete = async (base64Image: string) => {
@@ -60,11 +61,22 @@ export default function Home() {
     }
   };
 
+  const handleDelete = async (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    if (!window.confirm('Are you sure you want to delete this project?')) return;
+
+    const success = await deleteProject({ id });
+    if (success) {
+      setProjects((prev) => prev.filter((p) => p.id !== id));
+    }
+  };
+
   useEffect(() => {
     const fetchProjects = async () => {
+      setIsLoading(true);
       const items = await getProjects();
-
       setProjects(items);
+      setIsLoading(false);
     };
 
     fetchProjects();
@@ -127,38 +139,59 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="projects-grid">
-            {projects.map(({ id, name, renderedImage, sourceImage, timestamp }) => (
-              <div
-                key={id}
-                className="project-card group"
-                onClick={() => navigate(`/visualizer/${id}`)}
-              >
-                <div className="preview">
-                  <img src={renderedImage || sourceImage} alt="Project" />
+          {!isLoading && projects.length === 0 ? (
+            <div className="empty-state">
+              <div className="empty-icon">
+                <Layers />
+              </div>
+              <h3>No projects yet</h3>
+              <p>Upload a floor plan to start your first architectural visualization.</p>
+              <a href="#upload" className="empty-cta">
+                Get Started
+              </a>
+            </div>
+          ) : (
+            <div className="projects-grid">
+              {projects.map(({ id, name, renderedImage, sourceImage, timestamp, isPublic }) => (
+                <div
+                  key={id}
+                  className="project-card group"
+                  onClick={() => navigate(`/visualizer/${id}`)}
+                >
+                  <div className="preview">
+                    <img src={renderedImage || sourceImage} alt="Project" />
 
-                  <div className="badge">
-                    <span>Community</span>
+                    <div className="badge">
+                      <span>{isPublic ? 'Public' : 'Private'}</span>
+                    </div>
+
+                    <button
+                      className="delete-btn"
+                      onClick={(e) => handleDelete(e, id)}
+                      title="Delete project"
+                    >
+                      <Trash2 size={16} />
+                    </button>
                   </div>
-                </div>
 
-                <div className="card-body">
-                  <div>
-                    <h3>{name}</h3>
+                  <div className="card-body">
+                    <div>
+                      <h3>{name}</h3>
 
-                    <div className="meta">
-                      <Clock size={12} />
-                      <span>{new Date(timestamp).toLocaleDateString()}</span>
-                      <span>By JS Mastery</span>
+                      <div className="meta">
+                        <Clock size={12} />
+                        <span>{new Date(timestamp).toLocaleDateString()}</span>
+                        <span>By You</span>
+                      </div>
+                    </div>
+                    <div className="arrow">
+                      <ArrowUpRight size={18} />
                     </div>
                   </div>
-                  <div className="arrow">
-                    <ArrowUpRight size={18} />
-                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>
