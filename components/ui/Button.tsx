@@ -19,13 +19,9 @@ const Button = ({
   const sizeClass = `btn--${size}`;
   const fullWidthClass = fullWidth ? 'btn--full' : '';
 
-  const combinedClasses = [
-    baseClass,
-    variantClass,
-    sizeClass,
-    fullWidthClass,
-    className
-  ].filter(Boolean).join(' ');
+  const combinedClasses = [baseClass, variantClass, sizeClass, fullWidthClass, className]
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <button className={combinedClasses} {...props}>

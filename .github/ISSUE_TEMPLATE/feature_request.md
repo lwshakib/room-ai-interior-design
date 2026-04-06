@@ -4,7 +4,6 @@ about: Suggest a new idea or improvement for Room AI Interior Design
 title: '[FEATURE] '
 labels: enhancement, feature
 assignees: ''
-
 ---
 
 **Is your feature request related to a problem? Please describe.**
