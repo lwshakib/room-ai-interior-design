@@ -2,6 +2,19 @@
 
 Room AI Interior Design is an AI-powered architectural visualization application that transforms 2D floor plans into photorealistic 3D renders.
 
+## 🏗️ Architecture
+
+```mermaid
+graph TD
+    User((User)) -->|Uploads Floor Plan| Frontend[React App / React Router 7]
+    Frontend -->|Authenticates| PuterAuth[Puter.js Auth]
+    Frontend -->|Invokes AI| PuterAI[Puter.ai / Gemini-2.5-flash-image-preview]
+    Frontend -->|Requests Storage| PuterWorker[Puter Worker / lib/puter.worker.js]
+    PuterWorker <-->|KV Store| PuterKV[Puter.js KV Storage]
+    PuterWorker -->|Permanent URL| PuterHosting[Puter File Hosting]
+    PuterAI -->|Returns 3D Render| Frontend
+```
+
 ## 🤸 Quick Start
 
 Follow these 3 simple steps to get the project running locally:
